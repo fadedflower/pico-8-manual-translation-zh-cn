@@ -259,32 +259,36 @@ Linux：~/.lexaloffle/pico-8/config.txt
 
 pico8 [switches] [filename.p8]
 
--width n         设置窗口宽度  
--height n        设置窗口高度  
--windowed n       设置窗口模式为关（0）或开（1）  
--volume n        设置音频音量 0..256  
--joystick n       从玩家 n (0..7) 开始使用摇杆控制  
--pixel_perfect n     1 为无过滤的整数倍屏幕缩放（默认是开）  
--preblit_scale n     复制到屏幕前，显示缩放 n 倍（和 -pixel_perfect 0 一起时比较有用）  
--draw_rect x,y,w,h    绘制 PICO-8 屏幕的绝对窗口坐标和大小  
--run filename      加载并运行卡带  
--x filename       以无头模式执行 PICO-8 卡带，随后退出（实验性功能！！）  
--export param_str    以无头模式运行 EXPORT 命令，随后退出（参阅导出部分下的注解）  
--p param_str       把一个参数字符串传递到指定卡带  
--splore         以 splore 模式启动  
--home path        设置存放 config.txt 和其他用户数据文件的路径  
--root_path path     设置存放卡带文件的路径  
--desktop path      设置保存截图和 gif 的位置  
--screenshot_scale n   截图的缩放。默认值：3（368x368 像素）  
--gif_scale n       gif 捕捉的缩放。默认值：2（256x256 像素）  
--gif_len n        以秒为单位，设置 gif 的最大长度（1..120）  
--gui_theme n       使用 1 设置高对比度编辑器配色方案  
--timeout n        下载超时前要等待多少秒（默认值：30）  
--software_blit n     设置使用软件 Blit 模式为关（0）或开（1）  
--foreground_sleep_ms n  帧与帧之间要休眠多少毫秒  
--background_sleep_ms n  后台运行时，帧与帧之间要休眠多少毫秒  
--accept_future n     1 为允许加载用未来版本的 PICO-8 制作的卡带  
--global_api n      1 为 API 函数留在全局作用域（调试时有用）
+| 开关                 | 含义                                                         |
+| -------------------- | ------------------------------------------------------------ |
+| -width n             | 设置窗口宽度                                                 |
+| -height n            | 设置窗口高度                                                 |
+| -windowed n          | 设置窗口模式为关（0）或开（1）                               |
+| -volume n            | 设置音频音量 0..256                                          |
+| -joystick n          | 从玩家 n (0..7) 开始使用摇杆控制                             |
+| -pixel_perfect n     | 1 为无过滤的整数倍屏幕缩放（默认是开）                       |
+| -preblit_scale n     | 复制到屏幕前，显示缩放 n 倍（和 -pixel_perfect 0 一起时比较有用） |
+| -draw_rect x,y,w,h   | 绘制 PICO-8 屏幕的绝对窗口坐标和大小                         |
+| -run filename        | 加载并运行卡带                                               |
+| -x filename          | 以无头模式执行 PICO-8 卡带，随后退出（实验性功能！！）       |
+| -export param_str    | 以无头模式运行 EXPORT 命令，随后退出（参阅导出部分下的注解） |
+| -p param_str         | 把一个参数字符串传递到指定卡带                               |
+| -splore              | 以 splore 模式启动                                           |
+| -home path           | 设置存放 config.txt 和其他用户数据文件的路径                 |
+| -root_path path      | 设置存放卡带文件的路径                                       |
+| -desktop path        | 设置保存截图和 gif 的位置                                    |
+| -screenshot_scale n  | 截图的缩放。默认值：3（368x368 像素）                        |
+| -gif_scale n         | gif 捕捉的缩放。默认值：2（256x256 像素）                    |
+| -gif_len n           | 以秒为单位，设置 gif 的最大长度（1..120）                    |
+| -gui_theme n         | 使用 1 设置高对比度编辑器配色方案                            |
+| -timeout n           | 下载超时前要等待多少秒（默认值：30）                         |
+| -software_blit n     | 设置使用软件 Blit 模式为关（0）或开（1）                     |
+| -foreground_sleep_ms | 帧与帧之间要休眠多少毫秒                                     |
+| -background_sleep_ms | 后台运行时，帧与帧之间要休眠多少毫秒                         |
+| -accept_future n     | 1 为允许加载使用未来版本的 PICO-8 制作的卡带                 |
+| -global_api n        | 1 为 API 函数留在全局作用域（调试时有用）                    |
+
+
 
 ### 控制器设置
 
