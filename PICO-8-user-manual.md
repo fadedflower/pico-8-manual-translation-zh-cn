@@ -4,21 +4,21 @@
 >
 > 该版本的手册属于非官方翻译，由 fadedflower 个人翻译并自用，出现翻译错误属于正常现象，请务必指出
 
-PICO-8 v0.2.6
-https://www.pico-8.com
-(c) Copyright 2014-2024 Lexaloffle Games LLP
-作者：Joseph White // hey@lexaloffle.com
+PICO-8 v0.2.6  
+https://www.pico-8.com  
+(c) Copyright 2014-2024 Lexaloffle Games LLP  
+作者：Joseph White // hey@lexaloffle.com 
 
-PICO-8 的构建用到下面这些库：
+PICO-8 的构建用到下面这些库： 
 
- SDL2 http://www.libsdl.org
- Lua 5.2 http://www.lua.org  // 见 license.txt
- ws281x by jgarff       // 见 license.txt
- GIFLIB http://giflib.sourceforge.net/
- WiringPi http://wiringpi.com/
- libb64 by Chris Venter
- miniz by Rich Geldreich
- z8lua by Sam Hocevar https://github.com/samhocevar/z8lua
+SDL2 http://www.libsdl.org  
+Lua 5.2 http://www.lua.org  // 见 license.txt  
+ws281x by jgarff       // 见 license.txt  
+GIFLIB http://giflib.sourceforge.net/  
+WiringPi http://wiringpi.com/  
+libb64 by Chris Venter  
+miniz by Rich Geldreich  
+z8lua by Sam Hocevar https://github.com/samhocevar/z8lua
 
 本手册的最新版本（格式含 html，txt）以及其他资源：
 
@@ -32,28 +32,28 @@ PICO-8 的严苛限制是经过精挑细选的，这样使用起来会更有乐�
 
 ## 技术规范
 
-> 显示屏：   128x128，固定 16 色色板
-> 输入：       6 按钮控制器
-> 卡带：       32k 数据，以 png 文件格式存储
-> 声音：       4 通道，64 清晰度芯片
-> 代码：       P8 Lua（代码最高 8192 个 Token）
-> CPU：       每秒 4M 虚拟机指令
-> 精灵图像：单块 128 个 8x8 精灵图像（附加 128 个图像，位于共享内存）
+> 显示屏：   128x128，固定 16 色色板  
+> 输入：       6 按钮控制器  
+> 卡带：       32k 数据，以 png 文件格式存储  
+> 声音：       4 通道，64 清晰度芯片  
+> 代码：       P8 Lua（代码最高 8192 个 Token）  
+> CPU：       每秒 4M 虚拟机指令  
+> 精灵图像：单块 128 个 8x8 精灵图像（附加 128 个图像，位于共享内存）  
 > 地图：       128x32 瓦片地图（附加 128x32 地图，位于共享内存）
 
 # 1 起步
 
 ## 1.1 键位
 
-> ALT+ENTER：切换全屏
-> ALT+F4：       快速退出（Windows）
-> CTRL-Q：      快速退出（Mac，Linux）
-> CTRL-R：      重载 / 运行 / 重启卡带
-> CTRL-S：      快速保存当前卡带
-> CTRL-M：     静音 / 取消静音
+> ALT+ENTER：切换全屏  
+> ALT+F4：       快速退出（Windows）  
+> CTRL-Q：      快速退出（Mac，Linux）  
+> CTRL-R：      重载 / 运行 / 重启卡带  
+> CTRL-S：      快速保存当前卡带  
+> CTRL-M：     静音 / 取消静音  
 > ENTER / P：  暂停菜单（卡带运行期间）
 
-> 玩家 1 默认键位：鼠标指针 + ZX / NM / CV
+> 玩家 1 默认键位：鼠标指针 + ZX / NM / CV  
 > 玩家 2 默认键位：SDFE + tab，Q / shift A
 
 要改变默认键位，在 PICO-8 内部使用 KEYCONFIG 实用工具：
@@ -160,8 +160,8 @@ FOLDER      在宿主操作系统的文件浏览器中打开当前目录
 
 PICO-8 的磁盘的默认位置是：
 
-Windows：C:/Users/Yourname/AppData/Roaming/pico-8/carts
-OSX：/Users/Yourname/Library/Application Support/pico-8/carts
+Windows：C:/Users/Yourname/AppData/Roaming/pico-8/carts  
+OSX：/Users/Yourname/Library/Application Support/pico-8/carts  
 Linux：~/.lexaloffle/pico-8/carts
 
 你可以在 pico-8/config.txt 中修改这个位置以及其他设置。
