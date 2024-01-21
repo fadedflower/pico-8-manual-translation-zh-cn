@@ -795,8 +795,8 @@ SFX 乐器只在音高改变，或者前一个音符的音量为 0 的时候重�
 运行时，附加的卡带可以像本地文件一样访问：
 
 ``````lua
-RELOAD(0,0,0X2000, "DAT1.P8") -- LOAD SPRITESHEET FROM DAT1.P8
-LOAD("GAME2.P8")              -- LOAD AND RUN ANOTHER CART
+RELOAD(0,0,0X2000, "DAT1.P8") -- 从 DAT1.P8 读取精灵表
+LOAD("GAME2.P8")              -- 加载并运行另一个卡带
 ``````
 
 > [!NOTE]
@@ -813,3 +813,194 @@ LOAD("GAME2.P8")              -- LOAD AND RUN ANOTHER CART
 pico8 mygame.p8 -export "-i 32 -s 2 -c 12 mygame.bin dat0.p8 dat1.p8"
 ``````
 
+# 4 Lua 语法入门
+
+PICO-8 程序使用 Lua 语法编写，但是不使用 Lua 标准库。以下是对 Lua 精华语法的简单总结。
+
+要获取更多细节，或者查询正规 Lua 语法，参阅 www.lua.org。
+
+- **注释**
+
+``````lua
+-- 使用像这样的两个横杠写一条注释
+--[[ 多行
+注释 ]]
+``````
+
+- **数据类型和赋值**
+
+Lua 里的数据类型有数字（number），字符串（string），布尔值（boolean）和表（table）：
+
+``````lua
+NUM = 12/100
+S = "这是一个字符串"
+B = FALSE
+T = {1,2,3}
+``````
+
+PICO-8 里的数字都是 16:16 的定点数。数值范围从 -32768.0 到 32768.99999
+
+可以使用十六进制记号，带有可选的分数部分：
+
+``````lua
+?0x11        -- 17
+?0x11.4000   -- 17.25
+``````
+
+用十进制书写的数字会四舍五入至最近的定点数值。要查看 32 位十六进制的表示结果，使用 `PRINT(TOSTR(VAL,TRUE))` ：
+
+``````lua
+?TOSTR(-32768,TRUE)      -- 0x8000.0000
+?TOSTR(32767.99999,TRUE) -- 0X7FFF.FFFF
+``````
+
+如果是正数，除以 0 的结果是 0x7fff.ffff；如果是负数，除以 0 的结果是 -0x7ffff.ffff。
+
+- **条件分支**
+
+``````lua
+IF NOT B THEN
+  PRINT("B 是 FALSE")
+ELSE
+  PRINT("B 不是 FALSE")
+END
+``````
+
+带 `ELSEIF`
+
+``````lua
+IF X == 0 THEN
+  PRINT("X 是 0")
+ELSEIF X < 0 THEN
+  PRINT("X 是负数")
+ELSE
+  PRINT("X 是正数")
+END
+``````
+
+``````lua
+IF (4 == 4) THEN PRINT("相等") END
+IF (4 ~= 3) THEN PRINT("不相等") END
+IF (4 <= 4) THEN PRINT("小于或等于") END
+IF (4 > 3) THEN PRINT("大于") END
+``````
+
+- **循环**
+
+循环区间是闭区间：
+
+``````lua
+FOR X=1,5 DO
+  PRINT(X)
+END
+-- 打印 1,2,3,4,5
+``````
+
+``````lua
+X = 1
+WHILE(X <= 5) DO
+  PRINT(X)
+  X = X + 1
+END
+``````
+
+``````lua
+FOR X=1,10,3 DO PRINT(X) END   -- 1,4,7,10
+``````
+
+``````lua
+FOR X=5,1,-2 DO PRINT(X) END  -- 5,3,1
+``````
+
+- **函数和局部变量**
+
+声明为 `LOCAL` 的变量，作用域是包含它们的代码块（例如，在 `FUNCTION` 里面，一个 `FOR` 循环，或者 `IF THEN END` 表达式）。
+
+``````lua
+Y=0
+FUNCTION PLUSONE(X)
+  LOCAL Y = X+1
+  RETURN Y
+END
+PRINT(PLUSONE(2)) -- 3
+PRINT(Y)          -- 0
+``````
+
+- **表**
+
+在 Lua 中，表是键值对的集合，键和值的类型都可以混合。用整数检索，表可以用作数组。
+
+``````lua
+A={} -- 创建一个空表
+A[1] = "BLAH"
+A[2] = 42
+A["FOO"] = {1,2,3}
+``````
+
+数组默认使用以 1 开始的索引：
+
+``````lua
+> A = {11,12,13,14}
+> PRINT(A[2]) -- 12
+``````
+
+但如果你更喜欢以 0 开始的数组，只要在 0 号槽位写入东西：
+
+``````lua
+> A = {[0]=10,11,12,13,14}
+``````
+
+但是使用以 1 开始的索引的表更特殊。这种数组的长度可以用 `#` 运算符得到，PICO-8 用这样的数组实现了 `ADD` ，`DEL` ，`DELI` ，`ALL` 和 `FOREACH` 函数。
+
+``````lua
+> PRINT(#A)   -- 4
+> ADD(A, 15)
+> PRINT(#A)   -- 5
+``````
+
+字符串索引可以用点记号书写
+
+``````lua
+PLAYER = {}
+PLAYER.X = 2 -- 等价于 PLAYER["X"]
+PLAYER.Y = 3
+``````
+
+若要获取更多细节，参阅“表函数”小节。
+
+- **PICO-8 简写语法**
+
+PICO-8 还允许用一些非标准，简短的方法来书写常见模式。
+
+1. `IF THEN END` 表达式，和 `WHILE THEN END` 可以像这样写在一行上：
+
+   ``````lua
+   IF (NOT B) I=1 J=2
+   ``````
+
+   这等价于：
+
+   ``````lua
+   IF NOT B THEN I=1 J=2 END
+   ``````
+
+   注意简写条件周围的括号是必需的。
+
+2. 赋值运算符
+
+   如果整个表达式在一行上，可以使用简写的赋值运算符。往任意二元运算符后面添加一个 `=` 就能构建，包括算术运算（`+=`，`-=` ..），位运算（`&=`，`|=` ..）或字符串拼接运算符（`..=`）
+
+   ``````lua
+   A += 2   -- 等价于: A = A + 2
+   ``````
+
+   // 注意左值出现了两次，所以对于 `TBL[FN()]+=1` ，`FN()` 会被调用两次。
+
+3. `!=` 运算符
+
+   并非简写，但是 PICO-8 也接受用 `!=` 取代 `~=` 来表示“不相等”
+
+   ``````lua
+   PRINT(1 != 2) -- TRUE
+   PRINT("FOO" == "FOO") -- TRUE (字符串驻留)
+   ``````
