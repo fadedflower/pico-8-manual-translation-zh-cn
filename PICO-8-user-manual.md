@@ -164,7 +164,7 @@ Windows：C:/Users/Yourname/AppData/Roaming/pico-8/carts
 OSX：/Users/Yourname/Library/Application Support/pico-8/carts  
 Linux：~/.lexaloffle/pico-8/carts
 
-你可以在 pico-8/config.txt 中修改这个位置以及其他设置。
+你可以在 `pico-8/config.txt` 中修改这个位置以及其他设置。
 
 > [!TIP]
 >
@@ -225,7 +225,7 @@ DIDN'T RELOAD; UNSAVED CHANGES
 
 ## 1.7 备份
 
-当你不保存改动并退出，或者覆盖已有文件时，卡带的一份备份会保存到 {appdata}/pico-8/backup 。输入 `BACKUP` 也会把当前卡带的副本保存到相同的文件夹。
+当你不保存改动并退出，或者覆盖已有文件时，卡带的一份备份会保存到 `{appdata}/pico-8/backup` 。输入 `BACKUP` 也会把当前卡带的副本保存到相同的文件夹。
 
 要在宿主操作系统的文件浏览器中打开备份文件夹，使用：
 
@@ -235,19 +235,19 @@ DIDN'T RELOAD; UNSAVED CHANGES
 
 把这些文件拖放到 PICO-8 窗口以进行加载是可行的。
 
-从版本 0.2.4c 开始，如果编辑器不处于空闲状态，每 20 分钟会保存一份周期备份，这也就意味着备份文件夹的大小每 5 小时会增长大概 1MB。这项设置可以在 config.txt 中禁用或调整
+从版本 0.2.4c 开始，如果编辑器不处于空闲状态，每 20 分钟会保存一份周期备份，这也就意味着备份文件夹的大小每 5 小时会增长大概 1MB。这项设置可以在 `config.txt` 中禁用或调整
 
 ## 1.8 配置
 
-每次会话的开始，PICO-8 会从 config.txt 中读取配置信息，退出时也会保存配置（所以你应当在 PICO-8 未运行的时候编辑 config.txt 文件）
+每次会话的开始，PICO-8 会从 `config.txt` 中读取配置信息，退出时也会保存配置（所以你应当在 PICO-8 未运行的时候编辑 `config.txt` 文件）
 
-config.txt 文件的位置取决于宿主操作系统：
+`config.txt` 文件的位置取决于宿主操作系统：
 
 Windows：C:/Users/Yourname/AppData/Roaming/pico-8/config.txt  
 OSX：/Users/Yourname/Library/Application Support/pico-8/config.txt  
 Linux：~/.lexaloffle/pico-8/config.txt
 
-使用 `-home` 开关（下文所述）可以用不同的路径来存放 config.txt 以及其他数据。
+使用 `-home` 开关（下文所述）可以用不同的路径来存放 `config.txt` 以及其他数据。
 
 有些设置可以在 PICO-8 运行期间进行修改，输入 `CONFIG SETTING VALUE` 。（输入 `CONFIG` 本身来获取设置列表）
 
@@ -255,7 +255,7 @@ Linux：~/.lexaloffle/pico-8/config.txt
 
 > [!NOTE]
 >
-> 这些开关会覆盖 config.txt 里的设置
+> 这些开关会覆盖 `config.txt` 里的设置
 
 pico8 [switches] [filename.p8]
 
@@ -292,8 +292,8 @@ pico8 [switches] [filename.p8]
 
 ### 控制器设置
 
-PICO-8 使用 SDL2 控制器配置方案，启动时会探测常见控制器，同时也会在与 config.txt 同目录的 sdl_controllers.txt 中寻找自定义映射。  
-sdl_controller.txt 每行有一条映射。
+PICO-8 使用 SDL2 控制器配置方案，启动时会探测常见控制器，同时也会在与 config.txt 同目录的 `sdl_controllers.txt` 中寻找自定义映射。  
+`sdl_controller.txt` 每行有一条映射。
 
 要为你的控制器生成自定义映射字符串，要么使用 SDL2 附带的 `controllermap` 程序，要么尝试 http://www.generalarcade.com/gamepadtool/
 
@@ -324,7 +324,7 @@ CONFIG GIF_RESET_MODE 1
 
 gif 格式无法精确到 30fps ，所以 PICO-8 转而使用最接近的值：33.3fps。
 
-如果你保存到桌面时出现了问题，请尝试在 config.txt 中配置别的桌面路径
+如果你保存到桌面时出现了问题，请尝试在 `config.txt` 中配置别的桌面路径
 
 ## 1.10 分享卡带
 
@@ -354,7 +354,7 @@ gif 格式无法精确到 30fps ，所以 PICO-8 转而使用最接近的值：3
 
 查看 BBS 卡带列表时，使用最顶部的一项重新下载卡带列表。如果你处于离线状态，显示的就是最后一次下载的列表，你依然可以游玩你已经下载的卡带。
 
-如果你在没有互联网访问的机器上安装了 PICO-8 ，你也可以使用 `INSTALL_GAMES` 添加一小部分预装的 BBS 卡带到 /games
+如果你在没有互联网访问的机器上安装了 PICO-8 ，你也可以使用 `INSTALL_GAMES` 添加一小部分预装的 BBS 卡带到 `/games`
 
 # 2 编辑工具
 
@@ -633,3 +633,183 @@ SFX 乐器只在音高改变，或者前一个音符的音量为 0 的时候重�
 > Who  全音阶 - 反转得到 ... 其他的全音阶
 
 改变音阶并不会影响当前的 SFX，仅当按住 CTRL 绘制新音符的时候影响，此时会应用新的音阶。
+
+# 3 导入工具 / 导出工具
+
+`EXPORT` 命令用于生成 png，wav 文件，独立的 html 和原生二进制卡带应用程序。输出格式从文件扩展名推断（例如 .png）。
+
+你可以随意分发和使用导出的卡带和数据，只要你获得卡带作者和贡献者的许可。
+
+- **精灵列表 / 标签（.png）**
+
+``````
+> IMPORT BLAH.PNG   -- EXPECTS 128X128 PNG AND COLOUR-FITS TO THE PICO-8 PALETTE
+> EXPORT BLAH.PNG   -- USE THE "FOLDER" COMMAND TO LOCATE THE EXPORTED PNG
+``````
+
+导入的时候，`-x` 和 `-y` 开关可以用来以像素为单位指定目标位置；`-s` 可以用来缩小图像（3 的意思是从 384x384 缩小到 128x128）
+
+``````
+> IMPORT BLAH.PNG -X 16 -Y 16 -S 3
+``````
+
+和 `IMPORT` 和 `EXPORT` 一起使用`-l` 开关则可以读写卡带的标签：
+
+``````
+> IMPORT -L BLAH.PNG
+``````
+
+> [!NOTE]
+>
+> 导入精灵表或标签时，色板的颜色会贴合到当前绘制状态的色板。
+
+- **SFX 和音乐（.wav）**
+
+从当前样式导出音乐（当编辑器模式是音乐），或者当前 SFX：
+
+``````
+> EXPORT FOO.WAV  
+``````
+
+导出所有的 SFX 为 foo0.wav，foo1.wav .. foo63.wav：
+
+``````
+> EXPORT FOO%D.WAV
+``````
+
+- **地图和代码**
+
+卡带的地图或源代码可以导出为单一图片，叫做 `.map.png` 或 `.lua.png`：
+
+``````
+> EXPORT FOO.MAP.PNG
+> EXPORT FOO.LUA.PNG
+``````
+
+地图图像是 1024X512（128x32 的 8x8 精灵）。Lua 图片的大小会设置为合适大小，但是每一行固定（同时被裁剪）为 192 像素宽。
+
+- **卡带（.p8，.p8.png，.p8.rom）**
+
+使用 `EXPORT` 保存卡带和使用 `SAVE` 差不多，但并不会改变当前编辑的卡带。例如，这可以用于以 `.p8.png` 格式保存一份副本用于分发，不会意外地在这份副本，而不是原始的 `.p8` 文件上做改动。
+
+`EXPORT` 还可以用于从命令行进行卡带文件格式转换。例如，在 Linux shell 上：
+
+``````shell
+> pico8 foo.p8 -export foo.p8.png
+``````
+
+## 3.1 Web 应用程序（.html）
+
+生成一个独立的 html 播放器（mygame.html，mygame.js）：
+
+``````
+> EXPORT MYGAME.HTML
+``````
+
+或者只要 `.js` 文件：
+
+``````
+> EXPORT MYGAME.JS
+``````
+
+使用 `-f` 把文件写到一个叫 `mygame_html` 的文件夹，使用 `index.html` 而不是 `mygame.html`
+
+``````
+> EXPORT -F MYGAME.HTML
+``````
+
+可选的，可以用 `-p` 开关提供一个自定义的 html 模版：
+
+``````
+> EXPORT MYGAME.HTML -P ONE_BUTTON
+``````
+
+这会使用文件 `{application data}/pico-8/plates/one_button.html` 作为 html 外壳，替换一个特殊字符串 `##js_file##` 为 `.js` 文件名。可选的，替换字符串 `##label_file##` 为卡带标签图片的 Data URL。
+
+使用 `-w` 导出为 `.wasm` \+ `.js` ：
+
+``````
+> EXPORT -W MYGAME.HTML
+``````
+
+> [!NOTE]
+>
+> 导出为 `.wasm` 的时候，页面必须由一个 Web 服务器提供，而不是直接从本地文件系统中用浏览器打开。对大部分用途而言，默认的 `.js` 导出没啥问题，但是 `.wasm` 稍微小一点也快一点。
+
+## 3.2 二进制应用程序（.bin）
+
+给 Windows，Linux（64 位），Mac 和树莓派生成独立可执行程序：
+
+``````
+> EXPORT MYGAME.BIN
+``````
+
+默认情况下，卡带标签用作图标，不透明。要从精灵表中指定一个图标，使用 `-i` ，可选的使用 `-s` 并 / 或使用 `-c` 控制大小和透明。
+
+> -I N  图标索引为 N，默认透明色是 0（黑色）。  
+> -S N  大小为 NxN 的精灵。大小 3 会产生 24x24 大小的图标。  
+> -C N  把颜色 N 当作透明色。使用 16 表示不透明。
+
+例如，使用精灵表中索引 32 开始的 2x2 精灵，使用颜色 12 作为透明色：
+
+``````
+> EXPORT -I 32 -S 2 -C 12 MYGAME.BIN
+``````
+
+要在输出文件夹和压缩档案中包含额外的文件，使用 `-E` 开关：
+
+``````
+> EXPORT -E README.TXT MYGAME.BIN
+``````
+
+> [!NOTE]
+>
+> Windows 文件系统不支持创建 Linux 或 Mac 可执行文件所需的文件元数据。PICO-8 通过导出保留文件属性的 zip 文件来解决这个问题。因此，建议把输出的 zip 文件原样分发，以保证其他操作系统的用户能运行。否则，下载了二进制文件的 Linux 用户可能需要对文件使用 `chmod +x mygame` 才能运行，Mac 用户需要使用 `chmod +x mygame.app/Contents/MacOS/mygame`
+
+## 3.3 上传到 itch.io
+
+如果你想要把你导出的卡带上传到 itch.io，生成可游玩的 html：
+
+1. 在 PICO-8 内：`EXPORT -F MYGAME.HTML`
+
+2. 在你的 itch 创作中心创建一个新项目
+
+3. 把文件夹打包为 zip 并上传（设置 “这个文件会在浏览器中游玩”）
+
+4. 设置嵌入到页面，大小为 750px x 680px
+
+5. 勾选“移动设备支持”（默认方向）以及“页面加载时自动启动”
+
+   // 不需要全屏按钮，因为默认的 PICO-8 模版已经有自己的全屏按钮了
+
+6. 设置背景颜色（BG2）为暗一点的颜色（例如 `#232323`），文本为亮一点的颜色（`#cccccc`）
+
+## 3.4 导出多个卡带
+
+生成独立的 html 或原生二进制播放器时，多达 16 个卡带可以传递给 `EXPORT` 以打包在一起。
+
+``````
+> EXPORT MYGAME.HTML DAT1.P8 DAT2.P8 GAME2.P8
+``````
+
+运行时，附加的卡带可以像本地文件一样访问：
+
+``````lua
+RELOAD(0,0,0X2000, "DAT1.P8") -- LOAD SPRITESHEET FROM DAT1.P8
+LOAD("GAME2.P8")              -- LOAD AND RUN ANOTHER CART
+``````
+
+> [!NOTE]
+>
+> 导出的卡带不能加载并运行 BBS 卡带，例如使用 `LOAD("#FOO")`
+
+## 3.5 从宿主操作系统运行 EXPORT
+
+运行 PICO-8 时，使用 `-export` 开关可以以无头模式启动导出工具。文件路径相对于当前目录，而不是 PICO-8 的文件系统。
+
+`EXPORT` 命令的参数以一个单一（小写）字符串传入：
+
+``````shell
+pico8 mygame.p8 -export "-i 32 -s 2 -c 12 mygame.bin dat0.p8 dat1.p8"
+``````
+
