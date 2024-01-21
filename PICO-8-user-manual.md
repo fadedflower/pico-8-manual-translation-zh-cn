@@ -224,3 +224,130 @@ DIDN'T RELOAD; UNSAVED CHANGES
 ``````
 
 ## 1.7 备份
+
+当你不保存改动并退出，或者覆盖已有文件时，卡带的一份备份会保存到 {appdata}/pico-8/backup 。输入 `BACKUP` 也会把当前卡带的副本保存到相同的文件夹。
+
+要在宿主操作系统的文件浏览器中打开备份文件夹，使用：
+
+``````
+> FOLDER BACKUPS
+``````
+
+把这些文件拖放到 PICO-8 窗口以进行加载是可行的。
+
+从版本 0.2.4c 开始，如果编辑器不处于空闲状态，每 20 分钟会保存一份周期备份，这也就意味着备份文件夹的大小每 5 小时会增长大概 1MB。这项设置可以在 config.txt 中禁用或调整
+
+## 1.8 配置
+
+每次会话的开始，PICO-8 会从 config.txt 中读取配置信息，退出时也会保存配置（所以你应当在 PICO-8 未运行的时候编辑 config.txt 文件）
+
+config.txt 文件的位置取决于宿主操作系统：
+
+Windows：C:/Users/Yourname/AppData/Roaming/pico-8/config.txt  
+OSX：/Users/Yourname/Library/Application Support/pico-8/config.txt  
+Linux：~/.lexaloffle/pico-8/config.txt
+
+使用 `-home` 开关（下文所述）可以用不同的路径来存放 config.txt 以及其他数据。
+
+有些设置可以在 PICO-8 运行期间进行修改，输入 `CONFIG SETTING VALUE` 。（输入 `CONFIG` 本身来获取设置列表）
+
+### 命令行参数
+
+> [!NOTE]
+>
+> 这些开关会覆盖 config.txt 里的设置
+
+pico8 [switches] [filename.p8]
+
+-width n         设置窗口宽度  
+-height n        设置窗口高度  
+-windowed n       设置窗口模式为关（0）或开（1）  
+-volume n        设置音频音量 0..256  
+-joystick n       从玩家 n (0..7) 开始使用摇杆控制  
+-pixel_perfect n     1 为无过滤的整数倍屏幕缩放（默认是开）  
+-preblit_scale n     复制到屏幕前，显示缩放 n 倍（和 -pixel_perfect 0 一起时比较有用）  
+-draw_rect x,y,w,h    绘制 PICO-8 屏幕的绝对窗口坐标和大小  
+-run filename      加载并运行卡带  
+-x filename       以无头模式执行 PICO-8 卡带，随后退出（实验性功能！！）  
+-export param_str    以无头模式运行 EXPORT 命令，随后退出（参阅导出部分下的注解）  
+-p param_str       把一个参数字符串传递到指定卡带  
+-splore         以 splore 模式启动  
+-home path        设置存放 config.txt 和其他用户数据文件的路径  
+-root_path path     设置存放卡带文件的路径  
+-desktop path      设置保存截图和 gif 的位置  
+-screenshot_scale n   截图的缩放。默认值：3（368x368 像素）  
+-gif_scale n       gif 捕捉的缩放。默认值：2（256x256 像素）  
+-gif_len n        以秒为单位，设置 gif 的最大长度（1..120）  
+-gui_theme n       使用 1 设置高对比度编辑器配色方案  
+-timeout n        下载超时前要等待多少秒（默认值：30）  
+-software_blit n     设置使用软件 Blit 模式为关（0）或开（1）  
+-foreground_sleep_ms n  帧与帧之间要休眠多少毫秒  
+-background_sleep_ms n  后台运行时，帧与帧之间要休眠多少毫秒  
+-accept_future n     1 为允许加载用未来版本的 PICO-8 制作的卡带  
+-global_api n      1 为 API 函数留在全局作用域（调试时有用）
+
+### 控制器设置
+
+PICO-8 使用 SDL2 控制器配置方案，启动时会探测常见控制器，同时也会在与 config.txt 同目录的 sdl_controllers.txt 中寻找自定义映射。  
+sdl_controller.txt 每行有一条映射。
+
+要为你的控制器生成自定义映射字符串，要么使用 SDL2 附带的 `controllermap` 程序，要么尝试 http://www.generalarcade.com/gamepadtool/
+
+要得知 SDL2 探测得到的控制器 ID，运行 PICO-8 之后，在 log.txt 中查找 `joysticks` 或者 `Mapping` 。不同的操作系统，ID 有可能有所区别。参见：https://www.lexaloffle.com/bbs/?tid=32130
+
+要设置哪些键盘按键触发摇杆按键，使用 `KEYCONFIG` 。
+
+## 1.9 截图和 GIF
+
+卡带运行的时候，使用：
+
+> CTRL-6 保存截图到桌面  
+> CTRL-7 捕捉卡带标签图像  
+> CTRL-8 开始录制视频  
+> CTRL-9 保存 GIF 视频到桌面（默认 8 秒）
+
+你可以随时保存视频（视频永远都在录制）；CTRL-8 只是重置视频的起始点。录制时间要长于 8 秒，使用 `CONFIG` 命令（最大值：120）
+
+``````
+CONFIG GIF_LEN 60
+``````
+
+如果你想要录制每次都重置（以创建不重叠的序列），使用：
+
+``````
+CONFIG GIF_RESET_MODE 1
+``````
+
+gif 格式无法精确到 30fps ，所以 PICO-8 转而使用最接近的值：33.3fps。
+
+如果你保存到桌面时出现了问题，请尝试在 config.txt 中配置别的桌面路径
+
+## 1.10 分享卡带
+
+有三种方式能分享用 PICO-8 制作的卡带：
+
+1. 直接与其他 PICO-8 用户分享 `.p8` 或 `.p8.png` 文件
+
+   输入 `FOLDER` 以在你的宿主操作系统中打开当前文件夹
+
+2. 把卡带发送到 Lexaloffe BBS 以获得可在网页游玩的版本
+
+   http://www.lexaloffle.com/pico-8.php?page=submit
+
+3. 导出卡带到独立的 html/js 或者原生二进制播放器（参阅“导出工具”小节以得到更多细节）
+
+## 1.11 SPLORE
+
+`SPLORE` 是一个内置实用工具，用来浏览并组织本地和 bbs（在线）卡带。输入 `SPLORE` [enter] 启动，或者用`-splore` 开关启动 PICO-8 。
+
+完全用摇杆控制 `SPLORE` 是可行的：
+
+> LEFT 和 RIGHT 切换卡带列表  
+> UP 和 DOWN 选择每个列表的项目  
+> X，O 或 MENU 启动卡带
+
+在卡带内，按 MENU 收藏一个卡带或退回 `SPLORE` 。如果你使用键盘，在卡带列表视图中选中卡带后，可以按 F 收藏卡带。
+
+查看 BBS 卡带列表时，使用最顶部的一项重新下载卡带列表。如果你处于离线状态，显示的就是最后一次下载的列表，你依然可以游玩你已经下载的卡带。
+
+如果你在没有互联网访问的机器上安装了 PICO-8 ，你也可以使用 `INSTALL_GAMES` 添加一小部分预装的 BBS 卡带到 /games
