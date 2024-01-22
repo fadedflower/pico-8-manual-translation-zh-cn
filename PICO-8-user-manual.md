@@ -1108,8 +1108,8 @@ FUNCTION_NAME(PARAMETER, [OPTIONAL_PARAMETER])
 >LOAD BLAH.P8
 ``````
 
-**LOAD(FILENAME, [BREADCRUMB], [PARAM_STR])**  
-**SAVE(FILENAME)**
+### LOAD(FILENAME, [BREADCRUMB], [PARAM_STR])
+### SAVE(FILENAME)
 
 加载或保存一个卡带
 
@@ -1123,11 +1123,11 @@ FUNCTION_NAME(PARAMETER, [OPTIONAL_PARAMETER])
 
 如果 ID 是卡带的父帖，或者没有指定修订号，那么就会获取最新版本。BBS 卡带可以从其他 BBS 卡带或者本地卡带加载，但是不能从导出卡带加载。
 
-**FOLDER**
+### FOLDER
 
 在宿主操作系统中打开卡带文件夹。
 
-**LS([DIRECTORY])**
+### LS([DIRECTORY])
 
 列出给定目录（文件夹）下的 `.p8` 和 `.p8.png` 文件，相对于当前目录。目录项会以斜杠结尾（例如 `foo/`）。
 
@@ -1136,7 +1136,7 @@ FUNCTION_NAME(PARAMETER, [OPTIONAL_PARAMETER])
 
 目录只能在 PICO-8 的虚拟磁盘上解析；在根目录调用 `LS("..")` 会解析为根目录。
 
-**RUN([PARAM_STR])**
+### RUN([PARAM_STR])
 
 从程序的起始位置开始运行。
 
@@ -1144,17 +1144,17 @@ FUNCTION_NAME(PARAMETER, [OPTIONAL_PARAMETER])
 
 提供 `PARAM_STR` 的时候，可以在运行时用 `STAT(6)` 访问。
 
-**STOP([MESSAGE])**
+### STOP([MESSAGE])
 
 停止卡带，可选的打印一条信息。
 
-**RESUME**
+### RESUME
 
 恢复程序运行。可简写为 `R` 。
 
 在命令行使用一个单一的 `.` 可以前进一帧。这会进入逐帧模式，这个模式能用 `stat(110)` 读取到。逐帧模式激活后，输入一条空命令（通过按下 enter）可以前进一帧。
 
-**ASSERT(CONDITION, [MESSAGE])**
+### ASSERT(CONDITION, [MESSAGE])
 
 如果 `CONDITION` 是 `false` ，程序停止，如果提供了 `MESSAGE` ，程序还会将其打印出来。调试卡带的时候比较有用，可以用 `ASSERT()` 对你确信是 `true` 的东西下断言。
 
@@ -1163,15 +1163,15 @@ ASSERT(ADDR >= 0 AND ADDR <= 0x7FFF, "OUT OF RANGE")
 POKE(ADDR, 42) -- 内存地址没问题，这是肯定的！
 ``````
 
-**REBOOT**
+### REBOOT
 
 重启机器，新建一个项目的时候比较有用。
 
-**RESET()**
+### RESET()
 
 重置 RAM 中 `0x5f00` .. `0x5f7f` 范围的数据到其默认值。这里面包括了色板，相机位置，裁剪和填充图案。如果你因为当前绘制状态让人无法识读文字，在命令行提示下不知所措，你就尝试输入 `RESET` ！运行中的程序也可以调用它。
 
-**INFO()**
+### INFO()
 
 打印一些关于卡带的信息：代码大小，Token 数，压缩大小
 
@@ -1180,7 +1180,7 @@ POKE(ADDR, 42) -- 内存地址没问题，这是肯定的！
 `UNSAVED CHANGES` - 内存中的卡带与磁盘上的不一致  
 `EXTERNAL CHANGES` - 卡带加载后，磁盘上的卡带发生了改动（例如，使用单独的文本编辑器编辑了程序）
 
-**FLIP()**
+### FLIP()
 
 将后台缓冲区翻转到屏幕上并等待下一帧。如果定义了 `_DRAW()` 或 `_UPDATE()` 回调，就不需要调用它，因为翻转会自动进行。但是如果使用了自定义的主循环，正常就需要调用 `FLIP` 了：
 
@@ -1198,7 +1198,7 @@ FLIP()GOTO _
 
 如果你的程序在下一帧到来之前没有调用 `FLIP` ，并且也没有进行 `_DRAW()` 回调，当前后台缓冲区的内容就会被复制到屏幕上。
 
-**PRINTH(STR, [FILENAME], [OVERWRITE], [SAVE_TO_DESKTOP])**
+### PRINTH(STR, [FILENAME], [OVERWRITE], [SAVE_TO_DESKTOP])
 
 打印一个字符串到宿主操作系统的控制台，用于调试。
 
@@ -1214,14 +1214,14 @@ FLIP()GOTO _
 >
 > 使用 `stat(4)` 读取剪贴板，但是剪贴板的内容只会在运行时按下 CTRL-V 后才提供（出于安全考虑）。
 
-**TIME()**  
-**T()**
+### TIME()  
+### T()
 
 返回从卡带运行开始流逝的秒数。
 
 这不是真实世界的时间，而是通过计数 `_UPDATE` 或 `_UPDATE60` 调用的次数来计算的。同一帧下，多次调用 `TIME()` 返回的是相同的结果。
 
-**STAT(X)**
+### STAT(X)
 
 获取系统状态，其中 `X` 是：
 
@@ -1247,7 +1247,7 @@ FLIP()GOTO _
 >
 > 音频部分，数值 16..26 是音频状态查询相关数值 46..56 的旧版本。它们只报告音频混音器的当前状态，该状态一秒只改变大约 20 次（取决于宿主声卡驱动以及其它因素）。数值 46..56 则是存储每个时间刻上混音器状态的历史，这样能对当前声音状态有更高精度的评估。
 
-**EXTCMD(CMD_STR, [P1, P2])**
+### EXTCMD(CMD_STR, [P1, P2])
 
 特殊系统命令，其中 `CMD_STR` 是一个字符串：
 
@@ -1294,3 +1294,4 @@ EXTCMD("REC_FRAMES")
 ``````
 
 gif（以及屏幕截图，音频）的默认文件名是 `foo_%d` ，其中 `foo` 是卡带的名称，而 `%d` 是一个从 0 开始的数字，其会自动增长，直到不存在拥有该名字的文件。使用 `EXTCMD("SET_FILENAME", "FOO")` 可以覆盖这个默认值。如果自定义文件名包含 `%d` ，那么也会使用这种数字自动增长的行为，否则，即使存在相同名字的文件也会写入文件。
+
