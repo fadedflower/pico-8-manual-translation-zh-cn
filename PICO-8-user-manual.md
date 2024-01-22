@@ -1637,3 +1637,90 @@ CIRCFILL(64,64,20,3)
 位 `0x0800.0000` ：反转绘图操作（`CIRCFILL` / `OVALFILL` / `RECFILL`）  
 位 `0x00FF.0000` 是正常用到的颜色位  
 位 `0x0000.FFFF` 解析为填充图案
+
+## 6.3 表函数
+
+> [!WARNING]
+>
+> 除了`PAIRS()` ，下列的函数和 `#` 运算符只适用于索引从 1 开始并且没有 `NIL` 条目的表。其它形式的表可以看作是哈希表或者集合，而不是带有长度的数组。
+
+### ADD(TBL, VAL, [INDEX])
+
+将值 `VAL` 添加到表 `TBL` 的末尾。等价于：
+
+``````lua
+TBL[#TBL + 1] = VAL
+``````
+
+如果给定了 `INDEX` ，那么元素会插入到那个位置：
+
+``````lua
+FOO={}        -- 创建空表
+ADD(FOO, 11)
+ADD(FOO, 22)
+PRINT(FOO[2]) -- 22
+``````
+
+### DEL(TBL, VAL)
+
+从表 `TBL` 中删除值 `VAL` 的第一个实例。剩下的条目往左移动一个索引，避免空洞。
+
+注意 `VAL` 是要删除的项目的值，而不是对表的索引。（要删除特定索引指向的项目，请改用 `DELI`）`DEL` 返回删除的项目，如果没有删除任何东西，就不返回值。
+
+``````lua
+A={1,10,2,11,3,12}
+FOR ITEM IN ALL(A) DO
+  IF (ITEM < 10) THEN DEL(A, ITEM) END
+END
+FOREACH(A, PRINT) -- 10,11,12
+PRINT(A[3])       -- 12
+``````
+
+### DELI(TBL, [I])
+
+类似 `DEL()` ，但是从表 `TBL` 中删除索引 `I` 指向的项目。如果没有给定 `I`，表的最后一个元素被删除并返回。 
+
+### COUNT(TBL, [VAL])
+
+返回表 `TBL` 的长度（和 `#TBL` 相同）。如果给定了 `VAL` ，返回这个表中 `VAL` 的实例数。
+
+### ALL(TBL)
+
+在 `FOR` 循环中使用，用来迭代表（有 1 开头的整数索引）中所有的项目，按照添加的顺序。
+
+``````lua
+T = {11,12,13}
+ADD(T,14)
+ADD(T,"HI")
+FOR V IN ALL(T) DO PRINT(V) END -- 11 12 13 14 HI
+PRINT(#T) -- 5
+``````
+
+### FOREACH(TBL, FUNC)
+
+对于表 `TBL` 中的每个项目，调用函数 `FUNC` 并将项目作为单一参数。
+
+``````lua
+> FOREACH({1,2,3}, PRINT)
+``````
+
+### PAIRS(TBL)
+
+在 `FOR` 循环中使用，用来迭代表 `TBL`，对于每个项目既提供键也提供值。不像 `ALL()` ，`PAIRS()` 迭代每个项目，不管索引方案如何。顺序不做保证。
+
+``````lua
+T = {["HELLO"]=3, [10]="BLAH"}
+T.BLUE = 5;
+FOR K,V IN PAIRS(T) DO
+PRINT("K: ".. K.." V:".. V)
+END
+``````
+
+输出：
+
+``````
+K: 10 v:BLAH
+K: HELLO v:3
+K: BLUE V:5
+``````
+
