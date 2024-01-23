@@ -1,7 +1,7 @@
 # pico-8-manual-translation-zh-cn
 PICO-8 手册的非官方简体中文翻译，个人自用
 
-翻译进度见[Issue #1](https://github.com/fadedflower/pico-8-manual-translation-zh-cn/issues/1)
+翻译基本完成
 
 [英文原版](https://www.lexaloffle.com/dl/docs/pico-8_manual.html)
 
