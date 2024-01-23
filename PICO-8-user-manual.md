@@ -1977,7 +1977,7 @@ $ADDR  -- PEEK4(ADDR)
 
 从源地址复制 `LEN` 字节的基础 RAM 到目的地址。内存段可以重叠。
 
-### RELOAD(DEST_ADDR, SOURCE_ADDR LEN, [FILENAME])
+### RELOAD(DEST_ADDR, SOURCE_ADDR, LEN, [FILENAME])
 
 和 `MEMCPY` 相同，但是是从卡带 ROM 复制。
 
