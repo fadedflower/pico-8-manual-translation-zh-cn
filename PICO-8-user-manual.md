@@ -2484,7 +2484,7 @@ var pico8_gpio = Array(128);
 
 可以通过启用 Devkit 输入模式接受鼠标和键盘输入：
 
-`POKE(0x5F2D, flags) `-- 其中 `flags` 是：
+`POKE(0x5F2D, flags)` -- 其中 `flags` 是：
 
 `0x1` 启用  
 `0x2` 鼠标按钮触发 `btn(4)..btn(6)`  
