@@ -2502,3 +2502,111 @@ var pico8_gpio = Array(128);
 `STAT(36)` -- 鼠标滚轮事件  
 `STAT(38)` -- 相对 X 轴移动（以宿主桌面像素为单位） -- 需要开启标志 `0x4`  
 `STAT(39)` -- 相对 Y 轴移动（以宿主桌面像素为单位） -- 需要开启标志 `0x4`
+
+## 6.14 额外的 Lua 特性
+
+PICO-8 还给高级用户开放了 2 个 Lua 特性：元表（Metatable）和协程（Coroutine）。
+
+要获取更多信息，请查阅 Lua 5.2 手册。
+
+### 元表
+
+元表用来定义对象在特定操作下的行为。例如，要用表来表示可以相加的 2D 向量，可以通过在元表中定义一个  `__add` 函数来重定义 `+` 运算符：
+
+``````lua
+VEC2D={
+ __ADD=FUNCTION(A,B)
+  RETURN {X=(A.X+B.X), Y=(A.Y+B.Y)}
+ END
+}
+ 
+V1={X=2,Y=9} SETMETATABLE(V1, VEC2D)
+V2={X=1,Y=5} SETMETATABLE(V2, VEC2D)
+V3 = V1+V2
+PRINT(V3.X..","..V3.Y) -- 3,14
+``````
+
+#### SETMETATABLE(TBL, M)
+
+设置表 `TBL` 的元表为 `M`。
+
+#### GETMETATABLE(TBL)
+
+返回表 `TBL` 的当前元表，如果没有设置就返回 `NIL`。
+
+#### RAWSET(TBL, KEY, VALUE)
+
+#### RAWGET(TBL, KEY)
+
+#### RAWEQUAL(TBL1,TBL2)
+
+#### RAWLEN(TBL)
+
+对表进行原始访问，就好像没有定义元方法一样。
+
+### 函数参数
+
+函数参数列表可以用 `...` 指定。
+
+``````lua
+FUNCTION PREPRINT(PRE, S, ...)
+  LOCAL S2 = PRE..TOSTR(S)
+  PRINT(S2, ...) -- 把剩下的参数传递给 PRINT()
+END
+``````
+
+要接受可变数量的参数，用它们定义一个表并且 / 或使用 Lua 的 `SELECT()` 函数。`SELECT(index, ...)` 返回 `index` 之后的所有参数。
+
+``````lua
+FUNCTION FOO(...)
+  LOCAL ARGS={...} -- 构造参数组成的表
+  FOREACH(ARGS, PRINT)
+  ?SELECT("#",...)    -- 另一种计算参数数量的方法
+  FOO2(SELECT(3,...)) -- 把索引 3 之后的参数传递给 FOO2()
+END
+``````
+
+### 协程
+
+协程提供了以一种并发的方式运行程序的不同部分，类似线程。一个函数可以作为协程调用，用 `YIELD()` 挂起任意次，之后在同一个地方恢复运行。
+
+``````lua
+FUNCTION HEY()
+  PRINT("DOING SOMETHING")
+  YIELD()
+  PRINT("DOING THE NEXT THING")
+  YIELD()
+  PRINT("FINISHED")
+END
+ 
+C = COCREATE(HEY)
+FOR I=1,3 DO CORESUME(C) END
+``````
+
+#### COCREATE(F)
+
+为函数 `F` 创建一个协程。
+
+#### CORESUME(C, [P0, P1 ..])
+
+运行或恢复运行协程 `C`。参数 `P0`，`P1` .. 会传递到协程的函数。
+
+如果协程执行完毕且没有任何错误，返回 `true`。如果有错误，返回 `false, error_message`。
+
+** 协程内发生的运行时错误不会导致程序停止运行。最好把 `CORESUME()` 用 `ASSERT()` 包裹。这样如果断言失败，程序就会打印 `CORESUME` 生成的错误消息。
+
+``````lua
+ASSERT(CORESUME(C))
+``````
+
+#### COSTATUS(C)
+
+以字符串的形式返回协程 `C` 的状态：
+
+`"running"`  
+`"suspended"`  
+`"dead"`
+
+#### YIELD
+
+挂起执行并返回到调用者。
