@@ -2171,3 +2171,51 @@ ROTR(X, N) -- X 中的所有位向右旋转 N 位
 > PRINT(9\2) -- 结果：4  等价于 FLR(9/2)
 ``````
 
+## 6.9 自定义菜单项
+
+### MENUITEM(INDEX, [LABEL], [CALLBACK])
+
+往暂停菜单中添加或更新一个菜单项。
+
+`INDEX` 应该介于 `1..5`，决定了每个菜单项的显示顺序。
+
+`LABEL` 应该是一个最长 16 个字符的字符串。
+
+`CALLBACK` 是用户选择该菜单项时调用的函数，如果回调返回了 `true`，暂停菜单保持打开状态。
+
+如果没有提供标签或函数，菜单项就会被移除。
+
+``````lua
+MENUITEM(1, "RESTART PUZZLE",
+  FUNCTION() RESET_PUZZLE() SFX(10) END
+)
+``````
+
+回调接受单一参数，那就是 L，R，X 按钮按下状态的位域。
+
+``````lua
+MENUITEM(1, "FOO",
+  FUNCTION(B) IF (B&1 > 0) THEN PRINTH("LEFT WAS PRESSED") END END
+)
+``````
+
+如果要过滤触发回调所用的按键，可以在 `INDEX` 的位 `0xFF00` 提供一个掩码。例如，要对一个特定的菜单项禁用 L，R，在 `INDEX` 中置位 `0x300`：
+
+``````lua
+MENUITEM(2 | 0x300, "RESET PROGRESS",
+  FUNCTION() DSET(0,0) END
+)
+``````
+
+可以在回调内更新，添加或移除菜单项：
+
+``````lua
+MENUITEM(3, "SCREENSHAKE: OFF",
+  FUNCTION()
+    SCREENSHAKE = NOT SCREENSHAKE
+    MENUITEM(NIL, "SCREENSHAKE: "..(SCREENSHAKE AND "ON" OR "OFF"))
+    RETURN TRUE -- 不关闭
+  END
+)
+``````
+
