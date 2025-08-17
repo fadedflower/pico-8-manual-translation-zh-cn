@@ -824,7 +824,7 @@ pico8 mygame.p8 -export "-i 32 -s 2 -c 12 mygame.bin dat0.p8 dat1.p8"
 
 PICO-8 程序使用 Lua 语法编写，但是不使用 Lua 标准库。以下是对 Lua 精华语法的简单总结。
 
-要获取更多细节，或者查询正规 Lua 语法，参阅 www.lua.org。
+要获取更多细节，或者查询正规 Lua 语法，参阅 www.lua.org 。
 
 ## 注释
 
